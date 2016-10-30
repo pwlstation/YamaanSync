@@ -527,7 +527,7 @@ func buildDeb(target target) {
 
 func buildSnap(target target) {
 	os.RemoveAll("snap")
-	
+
 	tmpl, err := template.ParseFiles("snapcraft.yaml.template")
 	if err != nil {
 		log.Fatal(err)
@@ -541,9 +541,9 @@ func buildSnap(target target) {
 	snaparch := goarch
 	if snaparch == "armhf" {
 		goarch = "arm"
-	}	
+	}
 	err = tmpl.Execute(f, map[string]string{
-		"Version": version,
+		"Version":      version,
 		"Architecture": snaparch})
 	if err != nil {
 		log.Fatal(err)

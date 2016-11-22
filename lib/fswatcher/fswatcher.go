@@ -29,7 +29,12 @@ type FsEventsBatch map[string]*FsEvent
 
 type FsWatcher struct {
 	folderPath            string
-	notifyModelChan       chan<- FsEventsBatch
+	// Ideally this would be a chan<- and StartWatchingFilesystem
+	// would return a <-chan, but that to achieve that while
+	// satisfying the type system requires a temporary variable
+	// which introduces a race condition on an uninitialized (nil)
+	// channel variable.
+	notifyModelChan       chan FsEventsBatch
 	fsEvents              FsEventsBatch
 	fsEventChan           <-chan notify.EventInfo
 	WatchingFs            bool
@@ -49,7 +54,7 @@ const (
 func NewFsWatcher(folderPath string, folderID string, ignores *ignore.Matcher) *FsWatcher {
 	return &FsWatcher{
 		folderPath:            folderPath,
-		notifyModelChan:       nil,
+		notifyModelChan:       make(chan FsEventsBatch),
 		fsEvents:              make(FsEventsBatch),
 		fsEventChan:           nil,
 		WatchingFs:            false,
@@ -61,16 +66,14 @@ func NewFsWatcher(folderPath string, folderID string, ignores *ignore.Matcher) *
 	}
 }
 
-func (watcher *FsWatcher) StartWatchingFilesystem() (<-chan FsEventsBatch, error) {
+func (watcher *FsWatcher) StartWatchingFilesystem() (chan FsEventsBatch, error) {
 	fsEventChan, err := watcher.setupNotifications()
 	if err == nil {
 		watcher.WatchingFs = true
 		watcher.fsEventChan = fsEventChan
 		go watcher.watchFilesystem()
 	}
-	notifyModelChan := make(chan FsEventsBatch)
-	watcher.notifyModelChan = notifyModelChan
-	return notifyModelChan, err
+	return watcher.notifyModelChan, err
 }
 
 var maxFiles = 512

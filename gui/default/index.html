@@ -50,13 +50,14 @@
             <span class="hidden-xs" translate translate-value-version="{{upgradeInfo.latest}}">Upgrade To {%version%}</span>
           </button>
         </li>
+        <!--
         <li class="dropdown" language-select></li>
         <li>
           <a class="navbar-link" href="https://docs.syncthing.net/intro/gui.html" target="_blank">
             <span class="fa fa-question-circle"></span>
             <span class="hidden-xs" translate>Help</span>
           </a>
-        </li>
+        </li>-->
         <li class="dropdown action-menu">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
             <span class="fa fa-cog"></span>
@@ -70,12 +71,12 @@
             <li><a href="" ng-click="shutdown()"><span class="fa fa-fw fa-power-off"></span>&nbsp;<span translate>Shutdown</span></a></li>
             <li><a href="" ng-click="restart()"><span class="fa fa-fw fa-refresh"></span>&nbsp;<span translate>Restart</span></a></li>
             <li class="divider" aria-hidden="true"></li>
-            <li class="visible-xs">
+            <!--<li class="visible-xs">
               <a href="https://docs.syncthing.net/intro/gui.html" target="_blank">
                 <span class="fa fa-fw fa-book"></span>&nbsp;<span translate>Help</span>
               </a>
             </li>
-            <li><a href="" data-toggle="modal" data-target="#about"><span class="fa fa-fw fa-heart-o"></span>&nbsp;<span translate>About</span></a></li>
+            <!--<li><a href="" data-toggle="modal" data-target="#about"><span class="fa fa-fw fa-heart-o"></span>&nbsp;<span translate>About</span></a></li>-->
             <li class="divider" aria-hidden="true"></li>
             <li><a href="" ng-click="advanced()"><span class="fa fa-fw fa-cogs"></span>&nbsp;<span translate>Advanced</span></a></li>
           </ul>
@@ -624,7 +625,7 @@
   </div> <!-- /container -->
 
   <!-- Bottom bar -->
-
+  <!--
   <nav class="navbar navbar-default navbar-fixed-bottom">
     <div class="container">
       <ul class="nav navbar-nav">
@@ -639,7 +640,7 @@
       </ul>
     </div>
   </nav>
-
+  -->
   <ng-include src="'syncthing/core/networkErrorDialogView.html'"></ng-include>
   <ng-include src="'syncthing/core/httpErrorDialogView.html'"></ng-include>
   <ng-include src="'syncthing/core/restartingDialogView.html'"></ng-include>
